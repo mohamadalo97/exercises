@@ -1,6 +1,8 @@
 let allBalls = [];
 let moveAllBalls = () => {
   allBalls.forEach((ball) => {
+    console.log("ball", ball)
+    ball.move();
     // This line will be run once on every single ball that is in `allBalls`.
     // Call the `move` method on the ball. In this context the ball is `ball`.
   });
@@ -9,8 +11,8 @@ let moveAllBalls = () => {
 
 class Boundary {
   constructor() {
-    this.width = 500;
-    this.height= 500;
+    this.width = 650;
+    this.height= 650;
   }
   getWrappedX(x) {
     if (x < 0) {
@@ -57,25 +59,32 @@ class Ball {
     //   3. Instead of bringing in the `domElement` properties,  just put
     //       this line once:
     //       ballObject.domElement =  document.querySelector(".ball");
-
-  }
+    this.radius = helpers.getRandomNumber(20,80);
+    this.position = ({x: helpers.getRandomNumber(50,950), y: helpers.getRandomNumber(50,950)});
+    this.color = helpers.getRandomColor();
+    this.velocity = ({x: helpers.getRandomNumber(-20,20), y: helpers.getRandomNumber(-20,20)});
+    this.domElement =  this.buildBallDOMElement();
+    }
 
   move = () => {
     // Create newPos object and set the X  and Y values of this to velocity plus
     // the current position.
     let newPos = {
-      x: 0,// instead of 0, this should be the x velocity plus the x position
-      y: 0,// instead of 0, this should be the y velocity plus the y position
+      x: this.position.x + this.velocity.x,
+      y: this.position.y + this.velocity.y,
+      // instead of 0, this should be the x velocity plus the x position
+      // instead of 0, this should be the y velocity plus the y position
     }
     this.setPosition(newPos);
-    this.drawPosition(newPos);
+    this.drawPosition();
   }
 
   setPosition = (position) => {
     this.position = helpers.getNewBoundary().getWrappedPosition(position);
   }
 
-  drawPosition = (position) => {
+  drawPosition = () => {
+    console.log("draw", this.position)
     this.domElement.style.left = this.position.x + "px";
     this.domElement.style.top = this.position.y + "px";
   }
@@ -93,10 +102,16 @@ class Ball {
     return domElement;
   }
 }
+  
 
 let makeBall = () => {
+var newball = new Ball();
+allBalls.push(newball);
   // make a new instance of the Ball class, and add it to the `allBalls` array.
 }
-
 // This is time:
 //setInterval(moveAllBalls, 100);
+setInterval(moveAllBalls,100);
+for (let i = 0; i < 2000; i++) {
+  makeBall();
+}

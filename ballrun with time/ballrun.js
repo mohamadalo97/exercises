@@ -39,27 +39,36 @@ class Helpers {
 }
 let helpers = new Helpers();
 
+const multiply = (x,y)=>{
+if(x==1){ return y;}
+else if(x>1){
+return y +multiply(x-1,y)
+}
+else throw "Not Numbers"
+}
+var result = multiply(4,3);
+console.log(result)
 
 var ballObject = {}
 
 function constructBall() {
   // Add defaults to the ballObject
-  ballObject.radius = 20;
-  ballObject.position = ({x: 250, y: 250});
-  ballObject.color = "blue";
-  ballObject.velocity = ({x: 10, y: 0});
+  ballObject.radius = helpers.getRandomNumber(20,80);
+  ballObject.position = ({x: helpers.getRandomNumber(50,500), y: helpers.getRandomNumber(50,500)});
+  ballObject.color = helpers.getRandomColor();
+  ballObject.velocity = ({x: helpers.getRandomNumber(-20,20), y: helpers.getRandomNumber(-20,20)});
   ballObject.domElement = document.querySelector(".ball");
 
   // Add the following starting styles to the domElement:
   ballObject.domElement.style.width = ballObject.radius + "px";
   ballObject.domElement.style.height = ballObject.radius + "px";
-  ballObject.domElement.style.backgroundColor = ballObject.color;
+  ballObject.domElement.style.backgroundColor =helpers.getRandomColor(ballObject.domElement.style.backgroundColor);
   ballObject.domElement.style.top = ballObject.position.y + "px";
   ballObject.domElement.style.left = ballObject.position.x + "px";
 
   // use setInterval to run the move function every 500ms
   // and then delete the "Move" button.
-
+setInterval( move, 500);
 }
 
 function move() {
@@ -76,9 +85,13 @@ function setPosition() {
 
   // Part 2: use the helper function to get the "wrapped" position instead of just the fixed position.
   // ballObject.position = helpers.boundary().getWrappedPosition(ballObject.position);
+ballObject.position = helpers.boundary().getWrappedPosition(ballObject.position);
 }
-
 function drawPosition() {
   ballObject.domElement.style.top = ballObject.position.y + "px";
   ballObject.domElement.style.left = ballObject.position.x + "px";
 }
+
+
+      
+

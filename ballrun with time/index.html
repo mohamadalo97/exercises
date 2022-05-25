@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width">
+    <title> Ball Run </title>
     <style>
     .ballpit {
       position: absolute;
@@ -28,8 +30,7 @@
       <div class="ball"></div>
     </div>
     <div class="controls">
-      <button onclick="constructBall()" class="makeBall">Make a Ball</button>
-      <button onclick="move()" class="makeBall">Move Ball</button>
+      <button onclick="constructBall()" onclick="move()" class="makeBall">Make a Ball</button>
     </div>
     <script src="ballrun.js"></script>
   </body>
